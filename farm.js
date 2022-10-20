@@ -2,18 +2,42 @@ function getYieldForPlant(crop) {
 	return crop.yield;
 }
 function getYieldForCrop(input) {
-	return input.crop.yield * input.numCrops;
+	return getYieldForPlant(input) * input.numCrops;
 }
 
 const getTotalYield = function (crops) {
 	let total = 0;
-	Array.from(crops).forEach((crop) => {
-		return (total += getYieldForCrop);
+	crops.crops.forEach((crop) => {
+		total += getYieldForCrop(crop);
 	});
+	return total;
 };
+
+function getCostsForCrop(crop) {
+	// include environmental factors
+	return crop.costs * crop.numCrops;
+}
+
+function getRevenueForCrop(crop) {
+	// include environmental factors
+	let revenue = getYieldForCrop(crop) * crop.saleprice;
+	return revenue;
+}
+
+// function getProfitForCrop(crop) {
+// 	let profit = getRevenueForCrop(crop) -= getCostsForCrop(crop);
+// 	return profit;
+// }
+
+// function getTotalProfit{
+// // include environmental factors
+// }
 
 module.exports = {
 	getYieldForPlant,
 	getYieldForCrop,
 	getTotalYield,
+	getCostsForCrop,
+	getRevenueForCrop,
+	// getProfitForCrop,
 };
