@@ -2,7 +2,7 @@ function getYieldForPlant(crop) {
 	return crop.yield;
 }
 function getYieldForCrop(input) {
-	let yieldForCrop = getYieldForPlant(input) * input.numCrops;
+	let yieldForCrop = getYieldForPlant(input.crop) * input.numCrops;
 	return yieldForCrop;
 }
 
@@ -14,21 +14,25 @@ const getTotalYield = function (crops) {
 	return total;
 };
 
-function getCostsForCrop(crop) {
+function getCostsForCrop(input) {
+	let costs = input.costs * input.numCrops;
 	// include environmental factors
-	return crop.costs * crop.numCrops;
+	return costs;
 }
 
-function getRevenueForCrop(crop) {
+function getRevenueForCrop(input) {
 	// include environmental factors
-	let revenue = getYieldForCrop(crop) * crop.saleprice;
+	let yieldFromPLant = input.crop.yield;
+	let revenue = yieldFromPLant * input.salePrice;
 	return revenue;
 }
 
-// function getProfitForCrop(crop) {
-// 	let profit = getRevenueForCrop(crop) -= getCostsForCrop(crop);
-// 	return profit;
-// }
+function getProfitForCrop(input) {
+	let revenueForCrop = getRevenueForCrop(input.crop.yield);
+	let costForCrop = getCostsForCrop(input.crop.costs);
+	let profit = (revenueForCrop -= costForCrop);
+	return profit;
+}
 
 // function getTotalProfit{
 // // include environmental factors
@@ -40,5 +44,5 @@ module.exports = {
 	getTotalYield,
 	getCostsForCrop,
 	getRevenueForCrop,
-	// getProfitForCrop,
+	getProfitForCrop,
 };
