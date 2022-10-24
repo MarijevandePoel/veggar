@@ -67,30 +67,27 @@ function getRevenueForCrop({ input, environmentFactors }) {
 	return Math.round(revenueWithFactor);
 }
 
-function getProfitForCrop(input, environmentFactors) {
+function getProfitForCrop({ input, environmentFactors }) {
 	if (environmentFactors === undefined) {
-		let revenueForCrop = getRevenueForCrop(input);
-		let costForCrop = getCostsForCrop(input);
-		let profit = (revenueForCrop -= costForCrop);
-		return Math.round(profit);
+		return getRevenueForCrop({ input }) - getCostsForCrop(input);
 	}
-	let revenueForCropFactor = getRevenueForCrop(input, environmentFactors);
-	let costForCropFactor = getCostsForCrop(input);
-	let profitFactor = (revenueForCropFactor -= costForCropFactor);
-	return Math.round(profitFactor);
+	return (
+		getRevenueForCrop({ input, environmentFactors }) - getCostsForCrop(input)
+	);
 }
 
 function getTotalProfit({ input, environmentFactors }) {
+	//console.log(input);
 	if (environmentFactors === undefined) {
 		let totalProfit = 0;
-		input.forEach((crop) => {
-			totalProfit += getProfitForCrop(crop);
+		input.forEach((input) => {
+			totalProfit += getProfitForCrop({ input });
 		});
 		return totalProfit;
 	}
 	let totalProfitFactor = 0;
-	input.forEach((crop) => {
-		totalProfitFactor += getProfitForCrop(crop, environmentFactors);
+	input.forEach((input) => {
+		totalProfitFactor += getProfitForCrop({ input, environmentFactors });
 	});
 	return Math.round(totalProfitFactor);
 }
